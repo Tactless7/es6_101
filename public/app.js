@@ -12,6 +12,9 @@
 			document.getElementById('hello').addEventListener('click', function () {
 				_this.greetSomeone(_this.getName());
 			});
+			document.getElementById('search').addEventListener('click', function () {
+				_this.searching(document.getElementById('searchedName').value);
+			});
 		},
 		getName: function getName() {
 			var name = document.getElementById('name').value;
@@ -26,12 +29,36 @@
 			this.addHistory(name);
 		},
 		addHistory: function addHistory(name) {
-			this.history.push(name);
-			var historyItem = document.createElement('div');
-			historyItem.innerHTML = '' + name;
-			document.getElementById('history').appendChild(historyItem);
+			var reworkedName = this.firstLetterCapital(name);
+			this.history.push(reworkedName);
+			this.emptyHistory();
+			for (var i = 0; i < this.history.length; i++) {
+				var historyItem = document.createElement('li');
+				historyItem.innerHTML = '' + this.history[i];
+				document.getElementById('history').appendChild(historyItem);
+			}
 		},
-		firstLetterCapital: function firstLetterCapital(string) {}
+		firstLetterCapital: function firstLetterCapital(string) {
+			return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+		},
+		emptyHistory: function emptyHistory() {
+			var el = document.getElementById('history');
+			while (el.firstChild) {
+				el.removeChild(el.firstChild);
+			}
+		},
+		searching: function searching(string) {
+			console.log(string);
+			string = this.firstLetterCapital(string);
+			this.emptyHistory();
+			for (var i = 0; i < this.history.length; i++) {
+				if (this.history[i].startsWith(string)) {
+					var historyItem = document.createElement('li');
+					historyItem.innerHTML = '' + this.history[i];
+					document.getElementById('history').appendChild(historyItem);
+				}
+			}
+		}
 	};
 	app.init();
 })();
