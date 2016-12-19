@@ -1,9 +1,8 @@
 'use strict';
 
 (function () {
-	"use strict";
-
 	var app = {
+		history: [],
 		init: function init() {
 			this.listeners();
 		},
@@ -11,21 +10,28 @@
 			var _this = this;
 
 			document.getElementById('hello').addEventListener('click', function () {
-				_this.writeSomething(_this.getName());
+				_this.greetSomeone(_this.getName());
 			});
 		},
 		getName: function getName() {
 			var name = document.getElementById('name').value;
-			console.log(name);
 			!name ? name = undefined : name;
 			return name;
 		},
-		writeSomething: function writeSomething() {
+		greetSomeone: function greetSomeone() {
 			var name = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'Santa';
 
 			var template = 'Bonjour ' + name;
 			document.getElementById('greetings').innerHTML = template;
-		}
+			this.addHistory(name);
+		},
+		addHistory: function addHistory(name) {
+			this.history.push(name);
+			var historyItem = document.createElement('div');
+			historyItem.innerHTML = '' + name;
+			document.getElementById('history').appendChild(historyItem);
+		},
+		firstLetterCapital: function firstLetterCapital(string) {}
 	};
 	app.init();
 })();
