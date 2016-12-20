@@ -28,15 +28,18 @@
 			document.getElementById('greetings').innerHTML = template;
 			this.addHistory(name);
 		},
-		addHistory: function addHistory(name) {
-			var reworkedName = this.firstLetterCapital(name);
-			this.history.push(reworkedName);
-			this.emptyHistory();
+		iterateHistory: function iterateHistory() {
 			for (var i = 0; i < this.history.length; i++) {
 				var historyItem = document.createElement('li');
 				historyItem.innerHTML = '' + this.history[i];
 				document.getElementById('history').appendChild(historyItem);
 			}
+		},
+		addHistory: function addHistory(name) {
+			var reworkedName = this.firstLetterCapital(name);
+			this.history.push(reworkedName);
+			this.emptyHistory();
+			this.iterateHistory();
 		},
 		firstLetterCapital: function firstLetterCapital(string) {
 			return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
@@ -48,7 +51,6 @@
 			}
 		},
 		searching: function searching(string) {
-			console.log(string);
 			string = this.firstLetterCapital(string);
 			this.emptyHistory();
 			for (var i = 0; i < this.history.length; i++) {

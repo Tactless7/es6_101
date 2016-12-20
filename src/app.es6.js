@@ -22,15 +22,18 @@
 			document.getElementById('greetings').innerHTML = template;
 			this.addHistory(name);
 		},
+		iterateHistory(){
+			for( let i = 0 ; i < this.history.length ; i++){
+				const historyItem = document.createElement('li');
+				historyItem.innerHTML = `${this.history[i]}`;
+				document.getElementById('history').appendChild(historyItem);
+			}
+		},
 		addHistory(name){
 			const reworkedName = this.firstLetterCapital(name);
 			this.history.push(reworkedName);
 			this.emptyHistory();
-			for( let i = 0 ; i < this.history.length ; i++){
-				let historyItem = document.createElement('li');
-				historyItem.innerHTML = `${this.history[i]}`;
-				document.getElementById('history').appendChild(historyItem);
-			}
+			this.iterateHistory();
 		},
 		firstLetterCapital(string){
 			return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
@@ -42,12 +45,11 @@
 			}
 		},
 		searching(string){
-			console.log(string);
 			string = this.firstLetterCapital(string);
 			this.emptyHistory();
-			for(let i = 0 ; i < this.history.length ; i++){
+			for(let i = 0 ; i < this.history.length ; i++){	
 				if(this.history[i].startsWith(string)){
-					let historyItem = document.createElement('li');
+					const historyItem = document.createElement('li');
 					historyItem.innerHTML = `${this.history[i]}`;
 					document.getElementById('history').appendChild(historyItem);
 				}
